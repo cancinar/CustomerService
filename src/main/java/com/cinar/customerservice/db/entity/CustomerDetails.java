@@ -1,6 +1,7 @@
 package com.cinar.customerservice.db.entity;
 
 import com.cinar.customerservice.base.db.entity.BaseEntity;
+import com.cinar.customerservice.core.domain.CustomerDetailsDomain;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -34,4 +35,14 @@ public class CustomerDetails extends BaseEntity {
 
   @Embedded
   private AddressDetail addressDetail;
+
+  public CustomerDetailsDomain toCustomerDetailsDomain() {
+    return CustomerDetailsDomain.builder()
+        .name(this.name)
+        .commercialName(this.commercialName)
+        .storeNumber(this.storeNumber)
+        .customerNumber(this.customerNumber)
+        .addressDetails(this.addressDetail.toAddressDetailsDomain())
+        .build();
+  }
 }
