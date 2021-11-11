@@ -7,11 +7,11 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 @Target(TYPE)
 @Retention(RUNTIME)
 @Documented
-@Component
+@Repository
 @Inherited
 public @interface DomainRepository {}
