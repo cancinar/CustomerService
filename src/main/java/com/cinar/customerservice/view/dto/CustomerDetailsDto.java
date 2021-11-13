@@ -2,10 +2,12 @@ package com.cinar.customerservice.view.dto;
 
 import com.cinar.customerservice.core.domain.CustomerDetailsDomain;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
+@NoArgsConstructor
 public class CustomerDetailsDto {
 
   private String name;
