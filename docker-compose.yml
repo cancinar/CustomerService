@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  customer-service:
+    image: customer-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - "8080:8080"
+    depends_on:
+      - postgres-db
+    environment:
+      DB_HOST: postgres-db
+      DB_USER: customerdbuser
+      DB_PASS: customerdbuser1234
+  postgres-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: customerdbuser
+      POSTGRES_PASSWORD: customerdbuser1234
+      POSTGRES_DB: customerdb
+    ports:
+      - 5432:5432
