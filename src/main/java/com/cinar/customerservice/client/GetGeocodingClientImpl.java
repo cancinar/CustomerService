@@ -3,16 +3,30 @@ package com.cinar.customerservice.client;
 import com.cinar.customerservice.base.annotation.ClientService;
 import com.cinar.customerservice.core.client.GetGeocodingClient;
 import com.cinar.customerservice.core.domain.AddressDetailsDomain;
-import java.util.Random;
+import com.cinar.customerservice.view.dto.GeocodeDto;
+import lombok.AllArgsConstructor;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @ClientService
+@AllArgsConstructor
 public class GetGeocodingClientImpl implements GetGeocodingClient {
+
+  private final RestTemplate restTemplate;
 
   @Override
   public AddressDetailsDomain execute(String address) {
-    Random r = new Random();
-    Double latitude = 10 + (35 - 10) * r.nextDouble();
-    Double longitude = 10 + (35 - 10) * r.nextDouble();
-    return new AddressDetailsDomain(address, latitude, longitude);
+    final UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance()
+        .scheme("http")
+        .host("geocode-service")
+        .port(8081)
+        .path("api/geocode")
+        .queryParam("address", address);
+
+    final GeocodeDto geocodeDto = restTemplate.postForEntity(uriComponentsBuilder.toUriString(),
+        address,
+        GeocodeDto.class).getBody();
+
+    return new AddressDetailsDomain(address, geocodeDto.getLatitude(), geocodeDto.getLongitude());
   }
 }
