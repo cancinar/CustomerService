@@ -13,7 +13,9 @@ public class SwaggerConfig {
 
   @Bean
   public Docket bookApi() {
-    return new Docket(DocumentationType.SWAGGER_2).groupName("OPENINGHOURS").select()
+    return new Docket(DocumentationType.SWAGGER_2)
+        .groupName("CUSTOMER_CONTROLLER")
+        .select()
         .apis(RequestHandlerSelectors.basePackage("com.cinar.customerservice.view.controller")).build();
   }
 }
