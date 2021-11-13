@@ -1,7 +1,16 @@
 version: '3.4'
 
 services:
+  geocode-service:
+    image: geocode-service
+    container_name: geocode-service
+    build:
+      context: ./geolocation
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8081"
   customer-service:
+    container_name: customer-service
     image: customer-service
     build:
       context: .
@@ -9,6 +18,7 @@ services:
     ports:
     - "8080:8080"
     depends_on:
+      - geocode-service
       - postgres-db
     environment:
       DB_HOST: postgres-db
