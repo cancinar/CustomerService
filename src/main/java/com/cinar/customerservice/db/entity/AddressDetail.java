@@ -4,6 +4,7 @@ import com.cinar.customerservice.core.domain.AddressDetailsDomain;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -11,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Embeddable
 @SuperBuilder
+@NoArgsConstructor
 public class AddressDetail {
 
   @Column(nullable = false)
