@@ -8,4 +8,6 @@ public interface CustomerDetailsDomainRepository {
   Optional<CustomerDetailsDomain> findById(String id);
 
   CustomerDetailsDomain create(CustomerDetailsDomain customerDetailsDomain);
+
+  Optional<CustomerDetailsDomain> findByCustomerNumber(Long customerNumber);
 }

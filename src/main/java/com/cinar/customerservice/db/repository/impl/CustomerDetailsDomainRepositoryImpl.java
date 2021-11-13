@@ -22,18 +22,27 @@ public class CustomerDetailsDomainRepositoryImpl implements CustomerDetailsDomai
   }
 
   @Override
-  public CustomerDetailsDomain create(CustomerDetailsDomain customerDetailsDomain) {
-    final CustomerDetails customerDetails = CustomerDetails.builder()
-        .name(customerDetailsDomain.getName())
-        .customerNumber(customerDetailsDomain.getCustomerNumber())
-        .commercialName(customerDetailsDomain.getCommercialName())
-        .storeNumber(customerDetailsDomain.getStoreNumber())
-        .addressDetail(AddressDetail.builder()
-            .address(customerDetailsDomain.getAddressDetails().getAddress())
-            .latitude(customerDetailsDomain.getAddressDetails().getLatitude())
-            .longitude(customerDetailsDomain.getAddressDetails().getLongitude())
-            .build())
-        .build();
-    return customerDetailsJPARepository.save(customerDetails).toCustomerDetailsDomain();
+  public Optional<CustomerDetailsDomain> findByCustomerNumber(Long customerNumber) {
+    return customerDetailsJPARepository.findByCustomerNumber(customerNumber)
+        .map(CustomerDetails::toCustomerDetailsDomain);
   }
+
+  @Override
+  public CustomerDetailsDomain create(CustomerDetailsDomain customerDetailsDomain) {
+    return this.findByCustomerNumber(customerDetailsDomain.getCustomerNumber())
+        .orElseGet(() ->
+            customerDetailsJPARepository.save(CustomerDetails.builder()
+                .name(customerDetailsDomain.getName())
+                .customerNumber(customerDetailsDomain.getCustomerNumber())
+                .commercialName(customerDetailsDomain.getCommercialName())
+                .storeNumber(customerDetailsDomain.getStoreNumber())
+                .addressDetail(AddressDetail.builder()
+                    .address(customerDetailsDomain.getAddressDetails().getAddress())
+                    .latitude(customerDetailsDomain.getAddressDetails().getLatitude())
+                    .longitude(customerDetailsDomain.getAddressDetails().getLongitude())
+                    .build())
+                .build()).toCustomerDetailsDomain()
+        );
+  }
+
 }
