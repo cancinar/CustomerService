@@ -30,7 +30,7 @@ public class CustomerDetails extends BaseEntity {
   @Column(nullable = false)
   private Long storeNumber;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private Long customerNumber;
 
   @Embedded
