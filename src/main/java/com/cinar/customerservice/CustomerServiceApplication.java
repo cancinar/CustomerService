@@ -1,8 +1,7 @@
 package com.cinar.customerservice;
 
-import com.cinar.customerservice.core.domain.CustomerDetailsDomain;
-import com.cinar.customerservice.core.usecase.CreateCustomerUseCase;
-import com.cinar.customerservice.core.usecase.io.CreateCustomerUseCaseInput;
+import com.cinar.customerservice.view.controller.CustomerController;
+import com.cinar.customerservice.view.dto.CustomerDetailsDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.InputStream;
 import org.springframework.boot.CommandLineRunner;
@@ -18,16 +17,14 @@ public class CustomerServiceApplication {
   }
 
   @Bean
-  public CommandLineRunner initDBData(CreateCustomerUseCase createCustomerUseCase) {
+  public CommandLineRunner initDBData(CustomerController customerController) {
     return (arg) -> {
       try (InputStream inputStream = Thread.currentThread().getContextClassLoader()
           .getResourceAsStream("initialData.json")) {
         ObjectMapper mapper = new ObjectMapper();
-        CustomerDetailsDomain customerDetails = mapper.readValue(inputStream,
-            CustomerDetailsDomain.class);
-        createCustomerUseCase.run(new CreateCustomerUseCaseInput(customerDetails.getName(),
-            customerDetails.getCommercialName(), customerDetails.getStoreNumber(),
-            customerDetails.getCustomerNumber(), customerDetails.getAddressDetails().getAddress()));
+        CustomerDetailsDto customerDetails = mapper.readValue(inputStream,
+            CustomerDetailsDto.class);
+        customerController.createCustomer(customerDetails);
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
