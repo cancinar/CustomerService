@@ -2,5 +2,8 @@ package com.cinar.customerservice.base.usecase;
 
 public interface Input {
 
-  void validate();
+  default void validate() {
+    //Not implemented
+  }
+
 }

@@ -9,8 +9,4 @@ import lombok.Data;
 public class FindCustomerUseCaseInput implements Input {
 
   private String id;
-
-  @Override
-  public void validate() {
-  }
 }
