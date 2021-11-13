@@ -4,13 +4,19 @@ import com.cinar.customerservice.base.annotation.ClientService;
 import com.cinar.customerservice.core.client.GetGeocodingClient;
 import com.cinar.customerservice.core.domain.AddressDetailsDomain;
 import com.cinar.customerservice.view.dto.GeocodeDto;
-import lombok.AllArgsConstructor;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+
 @ClientService
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GetGeocodingClientImpl implements GetGeocodingClient {
+
+  @Value("${client.gecodeService.getGeocode.url}")
+  private String getGeoCodeUrl;
 
   private final RestTemplate restTemplate;
 
@@ -18,7 +24,7 @@ public class GetGeocodingClientImpl implements GetGeocodingClient {
   public AddressDetailsDomain execute(String address) {
     final UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance()
         .scheme("http")
-        .host("geocode-service")
+        .host(getGeoCodeUrl)
         .port(8081)
         .path("api/geocode")
         .queryParam("address", address);
@@ -27,6 +33,9 @@ public class GetGeocodingClientImpl implements GetGeocodingClient {
         address,
         GeocodeDto.class).getBody();
 
-    return new AddressDetailsDomain(address, geocodeDto.getLatitude(), geocodeDto.getLongitude());
+    return Optional.ofNullable(geocodeDto)
+        .map((dto -> new AddressDetailsDomain(address, geocodeDto.getLatitude(),
+            geocodeDto.getLongitude())))
+        .orElse(new AddressDetailsDomain());
   }
 }

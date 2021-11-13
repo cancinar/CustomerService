@@ -8,3 +8,8 @@ spring:
     url: jdbc:postgresql://${DB_HOST:localhost}:5432/customerdb
     username: ${DB_USER:customerdbuser}
     password: ${DB_PASS:customerdbuser1234}
+
+client:
+  gecodeService:
+    getGeocode:
+      url: ${GEOCODE_SERVICE_URL:localhost}

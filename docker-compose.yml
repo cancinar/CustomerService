@@ -21,6 +21,7 @@ services:
       - geocode-service
       - postgres-db
     environment:
+      GEOCODE_SERVICE_URL: geocode-service
       DB_HOST: postgres-db
       DB_USER: customerdbuser
       DB_PASS: customerdbuser1234
