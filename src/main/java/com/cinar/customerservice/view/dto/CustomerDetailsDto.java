@@ -23,6 +23,7 @@ public class CustomerDetailsDto {
         .name(customerDetailsDomain.getName())
         .customerNumber(customerDetailsDomain.getCustomerNumber())
         .storeNumber(customerDetailsDomain.getStoreNumber())
+        .commercialName(customerDetailsDomain.getCommercialName())
         .address(customerDetailsDomain.getAddressDetails().getAddress())
         .longitude(customerDetailsDomain.getAddressDetails().getLongitude())
         .latitude(customerDetailsDomain.getAddressDetails().getLongitude())
