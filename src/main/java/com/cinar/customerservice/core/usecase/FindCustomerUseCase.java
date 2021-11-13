@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 public class FindCustomerUseCase implements
     UseCase<FindCustomerUseCaseInput, FindCustomerUseCaseOutput> {
 
-  private final static String CUSTOMER_NOT_FOUND = "Customer cannot be found!";
+  protected final static String CUSTOMER_NOT_FOUND = "Customer cannot be found!";
   private final CustomerDetailsDomainRepository customerDetailsDomainRepository;
 
   @Override

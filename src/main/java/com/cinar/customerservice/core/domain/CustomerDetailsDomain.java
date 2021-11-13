@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class CustomerDetailsDomain extends Domain {
 
   private String name;
